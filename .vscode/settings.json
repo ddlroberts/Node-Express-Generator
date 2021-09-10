@@ -3,6 +3,8 @@
         "nucampsite"
     ],
     "cSpell.ignoreWords": [
+        "firstname",
+        "lastname",
         "resave"
     ]
 }
