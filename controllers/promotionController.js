@@ -1,4 +1,5 @@
 const Promotion = require('../models/promotion');
+const authenticate = require('../authenticate');
 
 const getPromotions = (req, res, next) => {
     Promotion.find()
@@ -10,7 +11,7 @@ const getPromotions = (req, res, next) => {
      .catch(err => next(err));
     };
 
-const createPromotion = (req, res, next) => {
+const createPromotion = (authenticate.verifyUser,(req, res, next) => {
         Promotion.create(req.body)
         .then(promotion => {
           console.log(`Will add the promotion: ${req.body.name} with description: ${req.body.description}`);
@@ -19,13 +20,13 @@ const createPromotion = (req, res, next) => {
           res.json(promotion);
         })
         .catch(err => next(err));
-      };
+      });
 
-const updatePromotions = (req, res) => {
+const updatePromotions = (authenticate.verifyUser,(req, res) => {
         res.statusCode = 403;
         res.end("PUT operation not supported on /promotion");
-      };
-const deletePromotions = (req, res, next) => {
+      });
+const deletePromotions = (authenticate.verifyUser,(req, res, next) => {
         Promotion.deleteMany()
         .then(response => {
           res.statusCode = 200;
@@ -33,7 +34,7 @@ const deletePromotions = (req, res, next) => {
           res.json(response);
         })
         .catch(err => next(err));
-      };  
+      });  
       
 const getPromotionById = (req, res, next) => {
         Promotion.findById(req.params.promotionId)
@@ -45,14 +46,14 @@ const getPromotionById = (req, res, next) => {
         .catch(err => next(err));
         };
     
-const createPromotionById = (req, res) => {
+const createPromotionById = (authenticate.verifyUser,(req, res) => {
         res.statusCode = 403;
         res.end(
           `POST operation not supported on /promotions/${req.params.promotionId}`
         );
-      };
+      });
     
-const updatePromotionById = (req, res, next) => {
+const updatePromotionById = (authenticate.verifyUser,(req, res, next) => {
         Promotion.findByIdAndUpdate(req.params.promotionId, {
           $set: req.body
         }, { new: true})
@@ -62,8 +63,8 @@ const updatePromotionById = (req, res, next) => {
             res.json(promotion);
           })
           .catch(err => next(err));
-      };
-const deletePromotionById = (req, res, next) => {
+      });
+const deletePromotionById = (authenticate.verifyUser,(req, res, next) => {
         Promotion.findByIdAndDelete(req.params.promotionId)
         .then(response => {
           res.statusCode = 200;
@@ -71,7 +72,7 @@ const deletePromotionById = (req, res, next) => {
           res.json(response);
         })
         .catch(err => next(err));
-    };
+    });
 
 module.exports = {
     getPromotions,
