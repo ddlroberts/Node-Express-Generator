@@ -11,7 +11,7 @@ const getPromotions = (req, res, next) => {
      .catch(err => next(err));
     };
 
-const createPromotion = (authenticate.verifyUser,(req, res, next) => {
+const createPromotion = (authenticate.verifyUser,authenticate.verifyAdmin,(req, res, next) => {
         Promotion.create(req.body)
         .then(promotion => {
           console.log(`Will add the promotion: ${req.body.name} with description: ${req.body.description}`);
@@ -26,7 +26,7 @@ const updatePromotions = (authenticate.verifyUser,(req, res) => {
         res.statusCode = 403;
         res.end("PUT operation not supported on /promotion");
       });
-const deletePromotions = (authenticate.verifyUser,(req, res, next) => {
+const deletePromotions = (authenticate.verifyUser,authenticate.verifyAdmin,(req, res, next) => {
         Promotion.deleteMany()
         .then(response => {
           res.statusCode = 200;
@@ -53,7 +53,7 @@ const createPromotionById = (authenticate.verifyUser,(req, res) => {
         );
       });
     
-const updatePromotionById = (authenticate.verifyUser,(req, res, next) => {
+const updatePromotionById = (authenticate.verifyUser,authenticate.verifyAdmin,(req, res, next) => {
         Promotion.findByIdAndUpdate(req.params.promotionId, {
           $set: req.body
         }, { new: true})
@@ -64,7 +64,7 @@ const updatePromotionById = (authenticate.verifyUser,(req, res, next) => {
           })
           .catch(err => next(err));
       });
-const deletePromotionById = (authenticate.verifyUser,(req, res, next) => {
+const deletePromotionById = (authenticate.verifyUser,authenticate.verifyAdmin,(req, res, next) => {
         Promotion.findByIdAndDelete(req.params.promotionId)
         .then(response => {
           res.statusCode = 200;
