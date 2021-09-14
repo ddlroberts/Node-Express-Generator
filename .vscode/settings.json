@@ -5,6 +5,8 @@
     "cSpell.ignoreWords": [
         "firstname",
         "lastname",
-        "resave"
+        "nucampsiteserver",
+        "resave",
+        "secport"
     ]
 }
